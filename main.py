@@ -1,22 +1,18 @@
 import pygame
 import sys
 
+def zoom(path):
+    return pygame.transform.smoothscale_by(pygame.image.load(path),1)
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos_x, pos_y):
         super().__init__()
         self.attack_animation = False
         self.sprites = []
-        self.sprites.append(pygame.image.load('attack_1.png'))
-        self.sprites.append(pygame.image.load('attack_2.png'))
-        self.sprites.append(pygame.image.load('attack_3.png'))
-        self.sprites.append(pygame.image.load('attack_4.png'))
-        self.sprites.append(pygame.image.load('attack_5.png'))
-        self.sprites.append(pygame.image.load('attack_6.png'))
-        self.sprites.append(pygame.image.load('attack_7.png'))
-        self.sprites.append(pygame.image.load('attack_8.png'))
-        self.sprites.append(pygame.image.load('attack_9.png'))
-        self.sprites.append(pygame.image.load('attack_10.png'))
+
+        for i in range(6, 25):
+            self.sprites.append(zoom("./new/Subject {0}.png".format(i)))
+
         self.current_sprite = 0
         self.image = self.sprites[self.current_sprite]
 
@@ -41,8 +37,8 @@ pygame.init()
 clock = pygame.time.Clock()
 
 # Game Screen
-screen_width = 400
-screen_height = 400
+screen_width = 800
+screen_height = 640
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("Sprite Animation")
 
@@ -51,6 +47,7 @@ moving_sprites = pygame.sprite.Group()
 player = Player(100, 100)
 moving_sprites.add(player)
 
+fps = 0.1
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -60,8 +57,9 @@ while True:
             player.attack()
 
     # Drawing
+    screen.fill((255, 255, 255))
     screen.fill((0, 0, 0))
     moving_sprites.draw(screen)
-    moving_sprites.update(0.25)
+    moving_sprites.update(fps)
     pygame.display.flip()
     clock.tick(60)
