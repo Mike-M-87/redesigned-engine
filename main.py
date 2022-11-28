@@ -98,8 +98,6 @@ class Player(pygame.sprite.Sprite):
                 button1.change_text("Animate", bg="navy")
 
         self.image = self.sprites[int(self.current_sprite)]
-
-
 # Game Screen
 screen_width = 848
 screen_height = 477
